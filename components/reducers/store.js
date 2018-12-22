@@ -1,9 +1,8 @@
 import Reducer from "./reducer";
 import { applyMiddleware, createStore, compose } from "redux";
-import Cookies from "cookies-js";
-import { createCookieMiddleware } from "redux-cookie";
+import { initialFetch, cookies } from "./initialstate";
 
-const init = {
+const init = cookies.get("user") || {
   _id: "",
   username: "",
   password: "",
@@ -11,10 +10,8 @@ const init = {
   friends: [],
   images: []
 };
-const store = createStore(
-  reducer,
-  applyMiddleware(createCookieMiddleware(Cookies, "/redux/cookie/"))
-);
+
+initialFetch();
 
 const Store = createStore(Reducer, init);
 export default Store;

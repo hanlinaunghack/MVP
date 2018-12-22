@@ -5,21 +5,13 @@ const {
   createUser,
   loginUser,
   loginUserGet,
-  saveImage
+  saveImage,
+  getImage
 } = require("./database/databaseQueries");
 const express = require("express");
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const paths = {
-  "auth.token": { name: "my_app_token" },
-  session: { name: "my_app_session" }
-};
-const getCookieOnServer = (req, name) => req.cookies[name];
-const setCookieOnServer = (res, name, value) => {
-  res.cookie(name, value);
-};
-const Reducer = require("./components/reducers/reducer.js");
 
 app
   .prepare()
@@ -29,11 +21,13 @@ app
     const cors = require("cors");
     const fileUpload = require("express-fileupload");
     const fs = require("fs");
-    const cookieParser = require("cookie-parser");
+    const favicon = require("serve-favicon");
 
     server.use(parser.text());
+    server.use(parser.json());
     server.use(parser.urlencoded({ extended: true }));
     server.use(cors());
+    server.use(favicon(path.join(__dirname, "static", "favicon.ico")));
     server.use(
       fileUpload({
         limits: { fileSize: 50 * 1024 * 1024 },
@@ -65,6 +59,7 @@ app
     });
     server.get("/upload/:username", (req, res) => {
       let username = req.params.username;
+      getImage(username, res);
     });
 
     server.post("/createUser", (req, res) => {

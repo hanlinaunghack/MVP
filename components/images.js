@@ -16,9 +16,12 @@ class Image extends React.Component {
         <img src={this.props.value.url} onClick={this.clickHandler} />
         <style jsx>{`
           img {
-            height: 100px;
-            width: 100px;
+            height: 200px;
+            width: 200px;
             object-fit: contain;
+            display: inline-block;
+            margin: 3px 5px;
+            border: 1px solid black;
           }
           img:hover {
             cursor: pointer;

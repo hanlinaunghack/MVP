@@ -6,10 +6,8 @@ import Store from "./reducers/store";
 export default props => {
   return (
     <Provider store={Store}>
-      <div>
-        <Nav />
-        {props.children}
-      </div>
+      <Nav />
+      {props.children}
     </Provider>
   );
 };

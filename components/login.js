@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import apiLogin from "./api/login";
 import Router from "next/router";
 import { withRouter } from "next/router";
+import Cookies from "universal-cookie";
 
 class Login extends React.Component {
   constructor(props) {
@@ -10,7 +11,9 @@ class Login extends React.Component {
     this.submitHandler = this.submitHandler.bind(this);
     this.dispatchHandler = this.dispatchHandler.bind(this);
   }
-  dispatchHandler(data) {
+  dispatchHandler(data, username) {
+    const cookies = new Cookies();
+    cookies.set("user", data, { path: "/", maxAge: 60 * 60 });
     this.props.dispatchUser(data);
   }
   submitHandler(e) {

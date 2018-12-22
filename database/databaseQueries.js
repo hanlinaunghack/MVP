@@ -47,11 +47,17 @@ exports.saveImage = (username, image, res) => {
     if (err) console.error(err);
     if (result) {
       result.images = result.images.concat(image);
-      console.log(result, image);
       result.save(err => {
         if (err) console.error(err);
         res.status(200).send("saved");
       });
     }
+  });
+};
+
+exports.getImage = (username, res) => {
+  User.findOne({ username }, (err, result) => {
+    if (err) console.error(err);
+    if (result) res.json(result);
   });
 };

@@ -13,11 +13,12 @@ class User extends React.Component {
     e.preventDefault();
     let data = new FormData();
     let username = this.props.username;
+    var dispatchFunction = this.props.dispatchImage;
     data.append("image", document.getElementById("upload").files[0]);
     data.append("username", username);
     data.append("access", document.getElementById("access").value);
     data.append("categories", document.getElementById("categories").value);
-    apiUpload(data, username, this.props.dispatchImage);
+    apiUpload(data, username, dispatchFunction);
   }
   render() {
     return (
@@ -45,8 +46,22 @@ class User extends React.Component {
           <input type="submit" value="submit" />
         </form>
         <h3>Images</h3>
-        {this.props.images.length > 0 &&
-          this.props.images.map((e, i) => <Images key={i} value={e} />)}
+        <div className="imageContainer">
+          {this.props.images.length > 0 &&
+            this.props.images.map((e, i) => <Images key={i} value={e} />)}
+        </div>
+        <style jsx>{`
+          .imageContainer {
+            flex-grow: 1;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            align-content: flex-start;
+            margin: auto;
+            justify-content: flex-start;
+            max-width: 1200px;
+          }
+        `}</style>
       </div>
     );
   }
@@ -64,4 +79,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(User));
+)(User);
