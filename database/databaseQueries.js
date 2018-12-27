@@ -1,4 +1,5 @@
 const User = require("./userdata");
+const fs = require("fs");
 
 exports.createUser = (username, password, res) => {
   User.findOne({ username }, (err, result) => {
@@ -59,5 +60,23 @@ exports.getImage = (username, res) => {
   User.findOne({ username }, (err, result) => {
     if (err) console.error(err);
     if (result) res.json(result);
+  });
+};
+
+exports.imagepageGet = (username, res) => {
+  User.findOne({ username }, (err, result) => {
+    if (err) console.error(err);
+    res.json(result);
+  });
+};
+
+exports.deleteImage = (username, index, res) => {
+  User.findOne({ username }, (err, result) => {
+    if (err) console.error(err);
+    result.images = result.images.filter((e, i) => i !== Number(index));
+    result.save(errz => {
+      if (errz) console.error(errz);
+      res.json(result);
+    });
   });
 };

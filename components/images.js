@@ -1,6 +1,7 @@
 import React from "react";
-import Router from "next/router";
 import { connect } from "react-redux";
+import Cookies from "universal-cookie";
+import Router from "next/router";
 
 class Image extends React.Component {
   constructor(props) {
@@ -8,7 +9,10 @@ class Image extends React.Component {
     this.clickHandler = this.clickHandler.bind(this);
   }
   clickHandler() {
-    Router.push(this.props.value.url);
+    let index = this.props.indexValue;
+    let cookies = new Cookies();
+    cookies.set("index", index, { maxAge: 60 * 60 });
+    Router.push("/image");
   }
   render() {
     return (
@@ -37,7 +41,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    dispatchImage: image => dispatch({ type: "DISPATCHIMAGE", image })
+    dispatchIndex: index => dispatch({ type: "DISPATCHINDEX", index })
   };
 }
 

@@ -48,7 +48,9 @@ class User extends React.Component {
         <h3>Images</h3>
         <div className="imageContainer">
           {this.props.images.length > 0 &&
-            this.props.images.map((e, i) => <Images key={i} value={e} />)}
+            this.props.images.map((e, i) => (
+              <Images key={i} value={e} indexValue={i} />
+            ))}
         </div>
         <style jsx>{`
           .imageContainer {

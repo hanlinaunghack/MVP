@@ -6,7 +6,9 @@ const {
   loginUser,
   loginUserGet,
   saveImage,
-  getImage
+  getImage,
+  imagepageGet,
+  deleteImage
 } = require("./database/databaseQueries");
 const express = require("express");
 const dev = process.env.NODE_ENV !== "production";
@@ -76,6 +78,17 @@ app
     server.get("/loginUser/:username", (req, res) => {
       let username = req.params.username;
       loginUserGet(username, res);
+    });
+
+    server.post("/deleteimage", (req, res) => {
+      let username = req.body.username;
+      let index = req.body.index;
+      deleteImage(username, index, res);
+    });
+
+    server.get("/imagepage/:username", (req, res) => {
+      let username = req.params.username;
+      imagepageGet(username, res);
     });
 
     server.get("*", (req, res) => {
